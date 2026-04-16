@@ -7,15 +7,16 @@ usando un pipeline multi-agente con 4 jueces LLM-as-a-Judge.
 Run: streamlit run app.py
 """
 
+import os
 import sys
-from pathlib import Path
 
-# Ensure the evaluacion package root is on sys.path so that
-# `from core.models import ...` etc. work when running via
-# `streamlit run evaluacion/app.py` from the parent directory.
-_pkg_root = str(Path(__file__).resolve().parent)
-if _pkg_root not in sys.path:
-    sys.path.insert(0, _pkg_root)
+# ── Path setup for Streamlit Cloud ──────────────────────────────────────────
+# Streamlit Cloud may run from a different working directory.
+# Ensure this file's directory is on sys.path AND is the cwd.
+_this_dir = os.path.dirname(os.path.abspath(__file__))
+if _this_dir not in sys.path:
+    sys.path.insert(0, _this_dir)
+os.chdir(_this_dir)
 
 import streamlit as st
 
